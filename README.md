@@ -1,1 +1,1 @@
-# TSL
+# TSL (Type Safe LINQ)
