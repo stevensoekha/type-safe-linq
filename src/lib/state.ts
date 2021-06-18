@@ -1,5 +1,7 @@
 import { Pair } from './pair'
+import { List } from './list'
 
-export type State<a, b> = Pair<Array<a>, Array<b>>
+export type State<a, b> = Pair<List<a>, List<b>>
 
-export const State = <a, b>(excludes: a[], includes: b[]): Pair<Array<a>, Array<b>> => Pair(excludes, includes)
+export const State = <a, b>(selectable: a[], selected?: b[]): State<a, b> =>
+    Pair(List<a>(selectable), List<b>(selected ? selected : []))

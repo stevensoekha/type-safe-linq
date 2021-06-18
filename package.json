@@ -6,9 +6,9 @@
     "author": "Steven Soekha <steven.soekha@outlook.com>",
     "license": "MIT",
     "scripts": {
-        "start": "tsc; node out/index.js",
+        "start": "tsc; clear; node out/index.js",
         "w": "tsc --w",
-        "dev": "nodemon out/index.js"
+        "dev": "clear; nodemon out/index.js"
     },
     "devDependencies": {
         "nodemon": "^2.0.7",
