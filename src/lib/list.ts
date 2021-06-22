@@ -1,7 +1,6 @@
 import { Pair } from './pair'
 
 export type List<a> = {
-    data: Array<a>
     head: () => a
     tail: () => List<a>
     isEmpty: () => Boolean
@@ -12,27 +11,26 @@ export type List<a> = {
 }
 
 export const List = <a>(data: Array<a>): List<a> => ({
-    data,
     head: function (): a {
-        return this.data[0]
+        return data[0]
     },
     tail: function (): List<a> {
-        return List<a>(this.data.slice(1))
+        return List<a>(data.slice(1))
     },
     isEmpty: function (): Boolean {
-        return this.data.length === 0
+        return data.length === 0
     },
     size: function (): number {
-        return this.data.length
+        return data.length
     },
     map: function <b>(f: (_: a) => b): List<b> {
-        return List<b>(this.data.map(f))
+        return List<b>(data.map(f))
     },
     concat: function (l2: List<a>): List<a> {
-        return List<a>(this.data.concat(l2.data))
+        return List<a>(data.concat(l2.toArray()))
     },
     toArray: function (): Array<a> {
-        return this.data
+        return data
     },
 })
 
