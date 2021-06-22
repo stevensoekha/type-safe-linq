@@ -8,12 +8,14 @@ const main = () => {
     console.log('Main program \n')
     const students = Query<Student>(State(initialize()))
 
-    const x = students
+    const query = students
         .select('firstName')
-        .include('Grades', (q) => q.select('name', 'grade', 'ETC'))
+        .include('Grades', (q) => q.select('name'))
+        .select('age')
+        .select('email')
         .toList()
 
-    prettyPrint('Result x:', x)
+    prettyPrint('Query:', query)
 }
 
 main()
