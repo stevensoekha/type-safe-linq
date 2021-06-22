@@ -10,8 +10,18 @@ const main = () => {
 
     const query = students
         .select('firstName')
-        .include('Grades', (q) => q.select('name'))
-        .select('age')
+        .include('Grades', (q) =>
+            q
+                .select('name', 'grade')
+                .include('Professors', (q) =>
+                    q
+                        .select('name', 'age')
+                        .include('Schools', (q) => q.select('name').select('founded'))
+                        .select('email')
+                )
+                .select('ETC')
+        )
+        .select('lastName')
         .select('email')
         .toList()
 

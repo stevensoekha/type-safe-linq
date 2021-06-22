@@ -13,11 +13,11 @@ export const Student = (
     lastName: string,
     age: number,
     email: string,
-    grade?: Array<Grade>
+    grades?: Array<Grade>
 ): Student => ({
     firstName,
     lastName,
     age,
     email,
-    Grades: grade ? grade : [],
+    Grades: grades ? grades : [],
 })
