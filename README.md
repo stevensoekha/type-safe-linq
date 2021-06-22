@@ -28,4 +28,14 @@ The `SelectedQuery<a,b>` type in more depth
 <br />
 
 ### Fase 2: Include
-...
+![Update Category](./documentation/fase-2-1.png)
+
+Updating the category by adding a new morphism: `include: SelectedQuery -> SelectedQuery`.
+
+<br />
+
+![Update SelectedQuery](./documentation/fase-2-2.png)
+
+In order to add the `include()`, `SelectedQuery<a,b>` must be updated with this new functionality.
+
+<br />
