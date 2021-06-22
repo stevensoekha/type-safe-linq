@@ -5,7 +5,7 @@ A small system in which data can be easily retrieved by querying in a type safe 
 #### Preface: Thinking out loud
 ![Brainstorming](./documentation/preface.png)
 
-A good way yo start of is by brainstorming. In this session all problems, questions and thoughts were documented on paper to get a clearer view of the assignment.
+A proper way to start of this project is by brainstorming. In this session all problems, questions and thoughts were documented on paper to get a clearer view of the assignment.
 
 
 #### Fase 1: Select
