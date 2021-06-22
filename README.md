@@ -2,6 +2,12 @@
 
 A small system in which data can be easily retrieved by querying in a type safe manner. This is the [assignment](https://github.com/hogeschool/Software-Engineering-Minor/blob/master/Projects/project2%20-%20mini%20typesafe%20LINQ%20to%20SQL.md) regarding the third year minor Software Engineering at the Hogeschool Rotterdam.
 
+#### Preface: Thinking out loud
+![Brainstorming](./documentation/preface.png)
+
+A good way yo start of is by brainstorming. In this session all problems, questions and thoughts were documented on paper to get a clearer view of the assignment.
+
+
 #### Fase 1: Select
 ![Category](./documentation/fase-1-1.png)
 
