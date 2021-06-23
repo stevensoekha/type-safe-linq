@@ -8,12 +8,11 @@ export type Query<a> = {
 }
 
 export const Query = <a>(state: State<a, Unit>): Query<a> => ({
-    select: function <k extends NonIterable<a>>(...properties: k[]): SelectedQuery<Omit<a, k>, Pick<a, k>> {
-        return SelectedQuery(
+    select: <k extends NonIterable<a>>(...properties: k[]): SelectedQuery<Omit<a, k>, Pick<a, k>> =>
+        SelectedQuery(
             state.map(
                 (selectable) => selectable.map((x) => omitMany(x, properties)),
                 (_) => state.fst.map((x) => pickMany(x, properties))
             )
-        )
-    },
+        ),
 })

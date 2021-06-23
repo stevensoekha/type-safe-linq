@@ -13,8 +13,8 @@ export type SelectedQuery<a, b> = {
 }
 
 export const SelectedQuery = <a, b>(state: State<a, b>): SelectedQuery<a, b> => ({
-    select: function <k extends NonIterable<a>>(...properties: k[]): SelectedQuery<Omit<a, k>, b & Pick<a, k>> {
-        return SelectedQuery(
+    select: <k extends NonIterable<a>>(...properties: k[]): SelectedQuery<Omit<a, k>, b & Pick<a, k>> =>
+        SelectedQuery(
             state.map(
                 (selectable) => selectable.map((x) => omitMany(x, properties)),
                 (selected) =>
@@ -25,13 +25,12 @@ export const SelectedQuery = <a, b>(state: State<a, b>): SelectedQuery<a, b> => 
                         )
                     )
             )
-        )
-    },
-    include: function <k extends Iterable<a>, a2 extends GetIterableType<a[k]>, k2 extends keyof a2>(
+        ),
+    include: <k extends Iterable<a>, a2 extends GetIterableType<a[k]>, k2 extends keyof a2>(
         property: k,
         query: (q: Query<a2>) => SelectedQuery<Omit<a2, k2>, Pick<a2, k2>>
-    ): SelectedQuery<Omit<a, k>, b & Pick<a, k>> {
-        return SelectedQuery(
+    ): SelectedQuery<Omit<a, k>, b & Pick<a, k>> =>
+        SelectedQuery(
             state.map(
                 (selectable) => selectable.map((x) => omitOne(x, property)),
                 (selected) =>
@@ -44,9 +43,6 @@ export const SelectedQuery = <a, b>(state: State<a, b>): SelectedQuery<a, b> => 
                         )
                     )
             )
-        )
-    },
-    toList: function (): Array<b> {
-        return state.snd.toArray()
-    },
+        ),
+    toList: (): Array<b> => state.snd.toArray(),
 })
