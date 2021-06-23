@@ -25,7 +25,38 @@ const main = () => {
         .select('email')
         .toList()
 
+    const queryAll = students
+        .select('firstName')
+        .select('lastName')
+        .select('age')
+        .select('email')
+        .include('Schools', (q) =>
+            q
+                .select('name')
+                .select('location')
+                .select('founded')
+        )
+        .include('Grades', (q) =>
+            q
+                .select('name')
+                .select('grade')
+                .select('ETC')
+                .include('Professors', (q) => 
+                    q
+                        .select('name')
+                        .select('age')
+                        .select('email')
+                        .include('Schools', (q) => 
+                            q
+                                .select('name')
+                                .select('location')
+                                .select('founded')
+                        )
+                )
+        )
+
     prettyPrint('Query:', query)
+    prettyPrint('QueryAll:', queryAll)
 }
 
 main()
