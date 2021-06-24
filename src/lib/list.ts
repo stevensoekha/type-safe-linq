@@ -40,4 +40,4 @@ export const zip = <a, b>(l1: List<a>, l2: List<b>): List<Pair<a, b>> =>
         : List<Pair<a, b>>([Pair(l1.head(), l2.head())]).concat(zip(l1.tail(), l2.tail()))
 
 export const mergeZip = <a, b>(lst: List<Pair<a, b>>): List<a & b> =>
-    List<a & b>(lst.map((x) => ({ ...x.fst, ...x.snd })).toArray())
+    List<a & b>(lst.map((x) => ({ ...x.fst(), ...x.snd() })).toArray())

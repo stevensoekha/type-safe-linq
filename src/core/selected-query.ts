@@ -21,7 +21,7 @@ export const SelectedQuery = <a, b>(state: State<a, b>): SelectedQuery<a, b> => 
                     mergeZip(
                         zip(
                             selected,
-                            state.fst.map((x) => pickMany(x, properties))
+                            state.fst().map((x) => pickMany(x, properties))
                         )
                     )
             )
@@ -37,12 +37,12 @@ export const SelectedQuery = <a, b>(state: State<a, b>): SelectedQuery<a, b> => 
                     mergeZip(
                         zip(
                             selected,
-                            state.fst.map(
-                                (x) => ({ [property]: query(Query(State(x[property] as any))).toList() } as any)
-                            )
+                            state
+                                .fst()
+                                .map((x) => ({ [property]: query(Query(State(x[property] as any))).toList() } as any))
                         )
                     )
             )
         ),
-    toList: (): Array<b> => state.snd.toArray(),
+    toList: (): Array<b> => state.snd().toArray(),
 })

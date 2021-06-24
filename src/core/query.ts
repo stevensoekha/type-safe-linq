@@ -12,7 +12,7 @@ export const Query = <a>(state: State<a, Unit>): Query<a> => ({
         SelectedQuery(
             state.map(
                 (selectable) => selectable.map((x) => omitMany(x, properties)),
-                (_) => state.fst.map((x) => pickMany(x, properties))
+                (_) => state.fst().map((x) => pickMany(x, properties))
             )
         ),
 })
