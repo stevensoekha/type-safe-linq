@@ -9,6 +9,7 @@ export type SelectedQuery<a, b> = {
         property: k,
         query: (q: Query<a2>) => SelectedQuery<Omit<a2, k2>, Pick<a2, k2>>
     ) => SelectedQuery<Omit<a, k>, b & Pick<a, k>>
+    orderBy: <k extends NonIterable<b>>(property: k, order: 'ASC' | 'DESC') => SelectedQuery<a, b>
     toList: () => Array<b>
 }
 
@@ -44,5 +45,7 @@ export const SelectedQuery = <a, b>(state: State<a, b>): SelectedQuery<a, b> => 
                     )
             )
         ),
+    orderBy: <k extends NonIterable<b>>(property: k, order: 'ASC' | 'DESC'): SelectedQuery<a, b> =>
+        SelectedQuery(state.mapRight((x) => x.sort(property, order))),
     toList: (): Array<b> => state.snd().toArray(),
 })

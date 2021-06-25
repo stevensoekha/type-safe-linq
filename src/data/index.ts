@@ -6,8 +6,10 @@ import { School } from '../models/school'
 export const initialize = (): Array<Student> => [
     Student('Steven', 'Soekha', 24, 'steven.soekha@outlook.com', grades1(), schools1()),
     Student('Jack', 'Mitzer', 26, 'jack.mitzer@gmail.com', [], schools3()),
+    Student('Ahmed', 'Rashid', 24, 'ahmed.rizgar.rashid@gmail.com', grades2(), schools3()),
     Student('Liza', 'Smiths', 21, 'liza.smiths@outlook.com', grades2()),
     Student('Mika', 'Moka', 28, 'mika.moka@gmail.com', [], schools2()),
+    Student('Ava', 'Blue', 23, 'ava.blue@gmail.com', grades2(), schools3()),
 ]
 
 const grades1 = (): Array<Grade> => [

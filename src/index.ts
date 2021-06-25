@@ -20,6 +20,7 @@ const main = () => {
         .include('Grades', (q) => q.select('name').select('grade').select('ETC'))
         .select('email')
         .include('Schools', (q) => q.select('name', 'location').select('founded'))
+        .orderBy('age', 'DESC')
 
     // ! QUERY EXAMPLES
     const query = students

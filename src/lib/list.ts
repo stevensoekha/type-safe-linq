@@ -1,4 +1,5 @@
 import { Pair } from './pair'
+import { NonIterable } from '../utils/iterable'
 
 export type List<a> = {
     head: () => a
@@ -8,30 +9,23 @@ export type List<a> = {
     map: <b>(f: (_: a) => b) => List<b>
     concat: (l2: List<a>) => List<a>
     toArray: () => Array<a>
+    sort: <k extends NonIterable<a>>(property: k, order: 'ASC' | 'DESC') => List<a>
 }
 
 export const List = <a>(data: Array<a>): List<a> => ({
-    head: function (): a {
-        return data[0]
-    },
-    tail: function (): List<a> {
-        return List<a>(data.slice(1))
-    },
-    isEmpty: function (): Boolean {
-        return data.length === 0
-    },
-    size: function (): number {
-        return data.length
-    },
-    map: function <b>(f: (_: a) => b): List<b> {
-        return List<b>(data.map(f))
-    },
-    concat: function (l2: List<a>): List<a> {
-        return List<a>(data.concat(l2.toArray()))
-    },
-    toArray: function (): Array<a> {
-        return data
-    },
+    head: (): a => data[0],
+    tail: (): List<a> => List<a>(data.slice(1)),
+    isEmpty: (): Boolean => data.length === 0,
+    size: (): number => data.length,
+    map: <b>(f: (_: a) => b): List<b> => List<b>(data.map(f)),
+    concat: (l2: List<a>): List<a> => List<a>(data.concat(l2.toArray())),
+    toArray: (): Array<a> => data,
+    sort: <k extends NonIterable<a>>(property: k, order: 'ASC' | 'DESC'): List<a> =>
+        List(
+            data.sort((a, b) =>
+                order === 'ASC' ? (a[property] > b[property] ? 1 : -1) : a[property] < b[property] ? 1 : -1
+            )
+        ),
 })
 
 export const zip = <a, b>(l1: List<a>, l2: List<b>): List<Pair<a, b>> =>

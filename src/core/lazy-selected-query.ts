@@ -1,5 +1,4 @@
 import { GetIterableType, Iterable, NonIterable } from '../utils'
-import { LazyQuery } from './lazy-query'
 import { SelectedQuery } from './selected-query'
 import { Fun } from '../lib/fun'
 import { Query } from './query'
@@ -10,6 +9,7 @@ export type LazySelectedQuery<a, b> = {
         property: k,
         query: (q: Query<a2>) => SelectedQuery<Omit<a2, k2>, Pick<a2, k2>>
     ) => LazySelectedQuery<Omit<a, k>, b & Pick<a, k>>
+    orderBy: <k extends NonIterable<b>>(property: k, order: 'ASC' | 'DESC') => LazySelectedQuery<a, b>
     toList: (data: Query<any>) => Array<b>
 }
 
@@ -21,5 +21,7 @@ export const LazySelectedQuery = <a, b>(query: Fun<Query<a>, SelectedQuery<a, b>
         subquery: (q: Query<a2>) => SelectedQuery<Omit<a2, k2>, Pick<a2, k2>>
     ): LazySelectedQuery<Omit<a, k>, b & Pick<a, k>> =>
         LazySelectedQuery(query.then(Fun((x) => x.include(property, subquery)))),
+    orderBy: <k extends NonIterable<b>>(property: k, order: 'ASC' | 'DESC'): LazySelectedQuery<a, b> =>
+        LazySelectedQuery(query.then(Fun((x) => x.orderBy(property, order)))),
     toList: (data: Query<any>) => query.f(data).toList(),
 })

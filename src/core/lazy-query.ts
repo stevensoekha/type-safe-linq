@@ -1,8 +1,6 @@
 import { Fun } from '../lib/fun'
 import { LazySelectedQuery } from './lazy-selected-query'
 import { Query } from './query'
-import { SelectedQuery } from './selected-query'
-import { Unit } from '../lib/unit'
 import { NonIterable } from '../utils'
 
 export type LazyQuery<a> = {
