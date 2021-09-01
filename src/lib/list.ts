@@ -1,5 +1,6 @@
 import { Pair } from './pair'
 import { NonIterable } from '../utils/iterable'
+import { Filter, FilterCondition } from './filter'
 
 export type List<a> = {
     head: () => a
@@ -10,6 +11,7 @@ export type List<a> = {
     concat: (l2: List<a>) => List<a>
     toArray: () => Array<a>
     sort: <k extends NonIterable<a>>(property: k, order: 'ASC' | 'DESC') => List<a>
+    filter: (f: (_: Filter<a>) => FilterCondition<a>) => List<a>
 }
 
 export const List = <a>(data: Array<a>): List<a> => ({
@@ -26,6 +28,7 @@ export const List = <a>(data: Array<a>): List<a> => ({
                 order === 'ASC' ? (a[property] > b[property] ? 1 : -1) : a[property] < b[property] ? 1 : -1
             )
         ),
+    filter: (f: (_: Filter<a>) => FilterCondition<a>) => List<a>(data.filter((x) => f(Filter(x)).condition)),
 })
 
 export const zip = <a, b>(l1: List<a>, l2: List<b>): List<Pair<a, b>> =>

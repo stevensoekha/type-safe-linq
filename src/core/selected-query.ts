@@ -2,6 +2,7 @@ import { Query } from './query'
 import { State } from '../lib/state'
 import { zip, mergeZip } from '../lib/list'
 import { omitMany, omitOne, pickMany, GetIterableType, Iterable, NonIterable } from '../utils'
+import { Filter, FilterCondition } from '../lib/filter'
 
 export type SelectedQuery<a, b> = {
     select: <k extends NonIterable<a>>(...properties: k[]) => SelectedQuery<Omit<a, k>, b & Pick<a, k>>
@@ -10,6 +11,7 @@ export type SelectedQuery<a, b> = {
         query: (q: Query<a2>) => SelectedQuery<Omit<a2, k2>, Pick<a2, k2>>
     ) => SelectedQuery<Omit<a, k>, b & Pick<a, k>>
     orderBy: <k extends NonIterable<b>>(property: k, order: 'ASC' | 'DESC') => SelectedQuery<a, b>
+    where: (f: (_: Filter<b>) => FilterCondition<b>) => SelectedQuery<a, b>
     toList: () => Array<b>
 }
 
@@ -43,6 +45,13 @@ export const SelectedQuery = <a, b>(state: State<a, b>): SelectedQuery<a, b> => 
                                 .map((x) => ({ [property]: query(Query(State(x[property] as any))).toList() } as any))
                         )
                     )
+            )
+        ),
+    where: (f: (_: Filter<b>) => FilterCondition<b>): SelectedQuery<a, b> =>
+        SelectedQuery(
+            state.map(
+                (selectable) => selectable,
+                (selected) => selected.filter(f)
             )
         ),
     orderBy: <k extends NonIterable<b>>(property: k, order: 'ASC' | 'DESC'): SelectedQuery<a, b> =>
