@@ -48,12 +48,7 @@ export const SelectedQuery = <a, b>(state: State<a, b>): SelectedQuery<a, b> => 
             )
         ),
     where: (f: (_: Filter<b>) => FilterCondition<b>): SelectedQuery<a, b> =>
-        SelectedQuery(
-            state.map(
-                (selectable) => selectable,
-                (selected) => selected.filter(f)
-            )
-        ),
+        SelectedQuery(state.mapRight((selected) => selected.filter(f))),
     orderBy: <k extends NonIterable<b>>(property: k, order: 'ASC' | 'DESC'): SelectedQuery<a, b> =>
         SelectedQuery(state.mapRight((x) => x.sort(property, order))),
     toList: (): Array<b> => state.snd().toArray(),

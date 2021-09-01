@@ -16,7 +16,7 @@ const main = () => {
     const query1 = students
         .select('firstName')
         .select('age')
-        .where((x) => x.get('age').equals(21).not())
+        .where((x) => x.get('age').in([21, 34, 40]))
         .toList()
 
     prettyPrint('Query1', query1)
