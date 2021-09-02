@@ -2,6 +2,7 @@ import { GetIterableType, Iterable, NonIterable } from '../utils'
 import { SelectedQuery } from './selected-query'
 import { Fun } from '../lib/fun'
 import { Query } from './query'
+import { Filter, FilterCondition } from '../lib/filter'
 
 export type LazySelectedQuery<a, b> = {
     select: <k extends NonIterable<a>>(...properties: k[]) => LazySelectedQuery<Omit<a, k>, b & Pick<a, k>>
@@ -10,6 +11,7 @@ export type LazySelectedQuery<a, b> = {
         query: (q: Query<a2>) => SelectedQuery<Omit<a2, k2>, Pick<a2, k2>>
     ) => LazySelectedQuery<Omit<a, k>, b & Pick<a, k>>
     orderBy: <k extends NonIterable<b>>(property: k, order: 'ASC' | 'DESC') => LazySelectedQuery<a, b>
+    where: (f: (_: Filter<b>) => FilterCondition<b>) => LazySelectedQuery<a, b>
     toList: (data: Query<any>) => Array<b>
 }
 
@@ -23,5 +25,7 @@ export const LazySelectedQuery = <a, b>(query: Fun<Query<a>, SelectedQuery<a, b>
         LazySelectedQuery(query.then(Fun((x) => x.include(property, subquery)))),
     orderBy: <k extends NonIterable<b>>(property: k, order: 'ASC' | 'DESC'): LazySelectedQuery<a, b> =>
         LazySelectedQuery(query.then(Fun((x) => x.orderBy(property, order)))),
+    where: (f: (_: Filter<b>) => FilterCondition<b>): LazySelectedQuery<a, b> =>
+        LazySelectedQuery(query.then(Fun((x) => x.where(f)))),
     toList: (data: Query<any>) => query.f(data).toList(),
 })
