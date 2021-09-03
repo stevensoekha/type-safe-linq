@@ -50,10 +50,10 @@ const main = () => {
     // ! 5. GROUP BY
     const query5 = query4.groupBy('age')
 
-    // const lzquery5 = lzquery4
+    const lzquery5 = lzquery4.groupBy('age')
 
-    prettyPrint('Query4', query5.toList())
-    // prettyPrint('Query4 Lazy', lzquery4.toList(students))
+    // prettyPrint('Query5', query5.toList())
+    // prettyPrint('Query5 Lazy', lzquery5.toList(students))
 }
 
 main()
