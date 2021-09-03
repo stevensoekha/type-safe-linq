@@ -14,15 +14,10 @@ const main = () => {
     // ! SETUP
     const data = State<Student, Unit>(initialize())
     const students = Query(data)
-    const lazyStudents = LazyQuery<Student>(Fun(Id))
 
-    const query2 = lazyStudents
-        .select('firstName')
-        .select('age')
-        .where((x) => x.get('age').notEquals(24))
-        .toList(students)
+    const query1 = students.select('firstName', 'age').groupBy('age').toList()
 
-    prettyPrint('Query2', query2)
+    prettyPrint('Query1', query1)
 }
 
 main()
